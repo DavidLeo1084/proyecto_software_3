@@ -1,5 +1,5 @@
 <?php
-require 'includes/funciones.php';
+require 'includes/app.php';
 // include './includes/templates/header.php';
 incluirTemplates('header');
 // Validar la URL por ID válido

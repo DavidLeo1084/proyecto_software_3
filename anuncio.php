@@ -6,8 +6,8 @@ $id = filter_var($id, FILTER_VALIDATE_INT);
 if (!$id) {
     header('Location: / ');
 }
-
-require 'includes/config/database.php';
+require 'includes/app.php';
+// require 'includes/config/database.php';
 $db = conectarDB();
 
 $query = "SELECT * FROM propiedades WHERE id = $id";
@@ -20,7 +20,7 @@ if (!$resultadoConsulta->num_rows) {
 
 $propiedad = mysqli_fetch_assoc($resultadoConsulta);
 
-require 'includes/funciones.php';
+
 
 // include './includes/templates/header.php';
 incluirTemplates('header');

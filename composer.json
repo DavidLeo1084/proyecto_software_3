@@ -1,0 +1,22 @@
+{
+    "name": "leo/bienesraices",
+    "description": "proyecto software 3",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Leo\\Bienesraices\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "David Leonardo Romero Marulanda",
+            "email": "dlromerom@uqvirtual.edu.co"
+        }
+    ],
+    "require": {},
+    "autoload-dev": {
+        "psr-4": {
+            "App\\" : "./classes"
+        }
+    }
+}
