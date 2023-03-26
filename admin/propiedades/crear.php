@@ -31,10 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $propiedad = new Propiedad($_POST);
     $propiedad->guardar();
-    // debugear($propiedad);
     
-    
-
     echo "<pre>";
     var_dump($_FILES);
     echo "</pre>";
@@ -225,20 +222,12 @@ var_dump($_SESSION);
 
     <script src="/build/js/app.js"></script>
     <script src="/build/js/modernizr.js"></script>
-    <!-- <script src="../../build/js/app.js"></script>
-    <script src="../../build/js/modernizr.js"></script> -->
-    <!-- <script src="../src/js/modernizr.js"></script>
-    <script src="../src/js/app.js"></script> -->
 
 </body>
 
 </html>
-<!-- incluirTemplates('footer');
-include './includes/templates/footer.php'; -->
+
 <?php
 // Cerrar la conexión
 mysqli_close($db);
-
-//incluirTemplates('footer');
-// include './includes/templates/footer.php';
 ?>
