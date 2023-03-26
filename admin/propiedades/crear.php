@@ -1,24 +1,18 @@
 <?php
-require '../../includes/funciones.php';
-// session_start();
 
-$autenticar = estaAutenticado();
+require '../../includes/app.php';
 
-if (!$autenticar) {
-    header('Location:/');
-}
+use App\Propiedad;
+
+estaAutenticado();
 
 //Base de datos
-require '../../includes/config/database.php';
 $db = conectarDB();
 //Consultar para obtener los datos de los vendedores
 
 $consulta = "SELECT * FROM vendedores";
 $resultado = mysqli_query($db, $consulta);
 
-
-
-// var_dump($db);
 //Arreglo con mensaje de errores
 $errores = [];
 //validar por tamaño (100 Kb máximo por imagen)
@@ -34,9 +28,16 @@ $vendedores_id = '';
 
 //ejecuta el codigo una vez el usuario envía el formulario
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // echo "<pre>";
-    // var_dump($_POST);
-    // echo "</pre>";
+
+    $propiedad = new Propiedad($_POST);
+    $propiedad->guardar();
+    // debugear($propiedad);
+    
+    
+
+    echo "<pre>";
+    var_dump($_FILES);
+    echo "</pre>";
 
     $titulo = mysqli_real_escape_string($db, $_POST['titulo']);
     $precio = mysqli_real_escape_string($db, $_POST['precio']);
@@ -76,10 +77,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errores[] = "La imagen excede el tamaño de 4Mb";
     }
 
-    // echo "<pre>";
-    // var_dump($errores);
-    // echo "</pre>";
-
     // Revisar  que el array de errores este vacío
     if (empty($errores)) {
 
@@ -93,16 +90,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         move_uploaded_file($imagen['tmp_name'], $carpetaImagenes . $nombreImagen);
 
-
-        //Insertar en la base de datos
-        $query = "INSERT INTO propiedades (titulo, precio, imagen, descripcion, habitaciones, wc, estacionamiento, creado, vendedores_id) 
-    VALUES ('$titulo', '$precio', '$nombreImagen', '$descripcion', '$habitaciones', '$wc', '$estacionamiento', '$creado', '$vendedores_id')";
-        // echo $query;
-
-        $resultado = mysqli_query($db, $query);
+        //  $resultado = mysqli_query($db, $query);
 
         if ($resultado) {
-            //echo "Insertado correctamente";
+            //Redireccionar al usuario
             header('Location: /admin?resultado=1');
         }
     }
@@ -113,10 +104,6 @@ if (!isset($_SESSION)) {
 $autenticar = $_SESSION['login'] ?? false;
 var_dump($_SESSION);
 
-// require '../../includes/funciones.php';
-
-// include './includes/templates/header.php';
-// incluirTemplates('header');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -126,7 +113,6 @@ var_dump($_SESSION);
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bienes Raices</title>
-    <!-- <link rel="stylesheet" href="/build/css/app.css"> -->
     <link rel="stylesheet" href="../../build/css/app.css">
 
 </head>
@@ -136,36 +122,34 @@ var_dump($_SESSION);
         <div class="contenedor contenido-header">
             <div class="barra">
 
-            <?php if ($autenticar) : ?>
+                <?php if ($autenticar) : ?>
                     <a href="/admin/index.php">
                     <?php endif; ?>
 
                     <?php if (!$autenticar) : ?>
                         <a href="/index.php">
-                    <?php endif; ?>
-                    <!-- <img src="../src/img/logo.svg" alt="Logotipo de Bienes Raices"> -->
-                    <img src="/build/img/logo.svg" alt="Logotipo de Bienes Raices">
-                </a>
-                <div class="mobile-menu">
-                    <!-- <img src="../src/img/barras.svg" alt="icono menu responsive"> -->
-                    <img src="/build/img/barras.svg" alt="icono menu responsive">
-
-                </div>
-                <div class="derecha">
-                    <!-- <img class="dark-mode-boton" src="../src/img/dark-mode.svg"> -->
-                    <img class="dark-mode-boton" src="/build/img/dark-mode.svg">
-                    <nav class="navegacion">
-                        <a href="/nosotros.php">Nosotros</a>
-                        <a href="/anuncios.php">Anuncios</a>
-                        <a href="/blog.php">Blog</a>
-                        <a href="/contacto.php">Contacto</a>
-                        <?php if ($autenticar) : ?>
-                            <a href="/cerrar-sesion.php">Cerrar Sesión</a>
                         <?php endif; ?>
-                    </nav>
-                </div>
+                        <!-- <img src="../src/img/logo.svg" alt="Logotipo de Bienes Raices"> -->
+                        <img src="/build/img/logo.svg" alt="Logotipo de Bienes Raices">
+                        </a>
+                        <div class="mobile-menu">
+                            <!-- <img src="../src/img/barras.svg" alt="icono menu responsive"> -->
+                            <img src="/build/img/barras.svg" alt="icono menu responsive">
 
-
+                        </div>
+                        <div class="derecha">
+                            <!-- <img class="dark-mode-boton" src="../src/img/dark-mode.svg"> -->
+                            <img class="dark-mode-boton" src="/build/img/dark-mode.svg">
+                            <nav class="navegacion">
+                                <a href="/nosotros.php">Nosotros</a>
+                                <a href="/anuncios.php">Anuncios</a>
+                                <a href="/blog.php">Blog</a>
+                                <a href="/contacto.php">Contacto</a>
+                                <?php if ($autenticar) : ?>
+                                    <a href="/cerrar-sesion.php">Cerrar Sesión</a>
+                                <?php endif; ?>
+                            </nav>
+                        </div>
             </div>
             <!--.barra-->
             <?php if ($inicio) { ?>
