@@ -3,6 +3,7 @@
 require '../../includes/app.php';
 
 use App\Propiedad;
+use Intervention\Image\ImageManagerStatic as Image;
 
 estaAutenticado();
 
@@ -14,9 +15,8 @@ $consulta = "SELECT * FROM vendedores";
 $resultado = mysqli_query($db, $consulta);
 
 //Arreglo con mensaje de errores
-$errores = [];
-//validar por tamaño (100 Kb máximo por imagen)
-$medida = 4000 * 100;
+$errores = Propiedad::getErrores();
+
 
 $titulo = '';
 $precio = '';
@@ -29,66 +29,39 @@ $vendedores_id = '';
 //ejecuta el codigo una vez el usuario envía el formulario
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
+    // Crea una nueva instancia
     $propiedad = new Propiedad($_POST);
-    $propiedad->guardar();
+
+    // Genera un nombre único
+    $nombreImagen = md5(uniqid(rand(), true)) . '.jpg';
+
+    /**Setear la imagen en el servidor 
+    Realiza un resize a la imagen con Intervention */
+    if ($_FILES['imagen']['tmp_name']) {
+        $image = Image::make($_FILES['imagen']['tmp_name'])->fit(800, 600);
+        $propiedad->setImagen($nombreImagen);
+    }
+
     
-    echo "<pre>";
-    var_dump($_FILES);
-    echo "</pre>";
-
-    $titulo = mysqli_real_escape_string($db, $_POST['titulo']);
-    $precio = mysqli_real_escape_string($db, $_POST['precio']);
-    $descripcion = mysqli_real_escape_string($db, $_POST['descripcion']);
-    $habitaciones = mysqli_real_escape_string($db, $_POST['habitaciones']);
-    $wc = mysqli_real_escape_string($db, $_POST['wc']);
-    $estacionamiento = mysqli_real_escape_string($db, $_POST['estacionamiento']);
-    $vendedores_id = mysqli_real_escape_string($db, $_POST['vendedores_id']);
-    $creado = date('Y/m/d');
-    $imagen = $_FILES['imagen'];
-
-    if (!$titulo) {
-        $errores[] = "Se debe añadir un título";
-    }
-    if (!$precio) {
-        $errores[] = "Se debe añadir un precio";
-    }
-    if (strlen($descripcion) <  50) {
-        $errores[] = "Se debe añadir una descripción no menor a 50 caracteres";
-    }
-    if (!$habitaciones) {
-        $errores[] = "Se debe seleccionar un número de habitaciones";
-    }
-    if (!$wc) {
-        $errores[] = "Se debe seleccionar un número de baños";
-    }
-    if (!$estacionamiento) {
-        $errores[] = "Se debe seleccionar un número de estacionamientos";
-    }
-    if (!$vendedores_id) {
-        $errores[] = "Se debe seleccionar el nombre de un vendedor";
-    }
-    if (!$imagen['name']) {
-        $errores[] = "Se debe de agregar una imagen";
-    }
-    if ($imagen['size'] > $medida) {
-        $errores[] = "La imagen excede el tamaño de 4Mb";
-    }
+    // Validar 
+    $errores = $propiedad->validar();
 
     // Revisar  que el array de errores este vacío
     if (empty($errores)) {
 
-        //Subida de archivos
-        $carpetaImagenes = '../../imagenes/';
-        if (!is_dir($carpetaImagenes)) {
-            mkdir($carpetaImagenes);
+        // Crear la carpeta para subir imagenes
+        if (!is_dir(CARPETA_IMAGENES)) {
+            mkdir(CARPETA_IMAGENES);
         }
 
-        $nombreImagen = md5(uniqid(rand(), true)) . 'jpg';
+        // Guarda la imagen en el servidor
+        $image->save(CARPETA_IMAGENES . $nombreImagen);
 
-        move_uploaded_file($imagen['tmp_name'], $carpetaImagenes . $nombreImagen);
+        // Guarda en la base de datos 
+        $resultado = $propiedad->guardar();
+        //debugear($resultado);
 
-        //  $resultado = mysqli_query($db, $query);
-
+        //Mensaje de éxito o error
         if ($resultado) {
             //Redireccionar al usuario
             header('Location: /admin?resultado=1');
@@ -104,7 +77,6 @@ var_dump($_SESSION);
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">

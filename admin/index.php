@@ -1,24 +1,12 @@
 <?php
-require '../includes/funciones.php';
+require '../includes/app.php';
 
-$autenticar = estaAutenticado();
+estaAutenticado();
 
-if (!$autenticar) {
-    header('Location:/');
-}
-// require '../includes/funciones.php';
+use App\Propiedad;
 
-// include './includes/templates/header.php';
-//  incluirTemplates('header');
-
-// importar conexión
-require '../includes/config/database.php';
-$db = conectarDB();
-// Escribir query
-$query = "SELECT * FROM propiedades";
-
-// Consultar BD
-$resultadoConsulta = mysqli_query($db, $query);
+//Implementar método para obtener todas las propiedades
+$propiedades = Propiedad::all();
 
 // Muestra mensaje de confirmación de creación de la propiedad
 $resultado = $_GET['resultado'] ?? null;
@@ -118,22 +106,22 @@ $autenticar = $_SESSION['login'] ?? false;
                 </tr>
             </thead>
             <tbody> <!-- Mostrar los resultados -->
-                <?php while ($propiedad = mysqli_fetch_assoc($resultadoConsulta)) : ?>
+                <?php foreach($propiedades as $propiedad) : ?>
                     <tr>
-                        <td class="listado-propiedades"><?php echo $propiedad['id']; ?></td>
-                        <td class="listado-propiedades"><?php echo $propiedad['titulo']; ?></td>
-                        <td class="listado-propiedades"><img src="/imagenes/<?php echo $propiedad['imagen']; ?>" class="imagen-tabla"></td>
-                        <td class="listado-propiedades">$ <?php echo $propiedad['precio']; ?></td>
+                        <td class="listado-propiedades"><?php echo $propiedad->id; ?></td>
+                        <td class="listado-propiedades"><?php echo $propiedad->titulo; ?></td>
+                        <td class="listado-propiedades"><img src="/imagenes/<?php echo $propiedad->imagen; ?>" class="imagen-tabla"></td>
+                        <td class="listado-propiedades">$ <?php echo $propiedad->precio; ?></td>
                         <td>
                             <form method="POST" class="w-100">
-                                <input type="hidden" name="id" value="<?php echo $propiedad['id']; ?>">
+                                <input type="hidden" name="id" value="<?php echo $propiedad->id; ?>">
                                 <input type="submit" class="boton-rojo-block" value="Eliminar">
                             </form>
 
-                            <a href="/admin/propiedades/actualizar.php?id=<?php echo $propiedad['id']; ?>" class="boton-amarillo-block">Actualizar</a>
+                            <a href="/admin/propiedades/actualizar.php?id=<?php echo $propiedad->id; ?>" class="boton-amarillo-block">Actualizar</a>
                         </td>
                     </tr>
-                <?php endwhile; ?>
+                <?php endforeach; ?>
             </tbody>
 
         </table>
