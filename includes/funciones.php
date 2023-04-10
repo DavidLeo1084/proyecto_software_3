@@ -17,7 +17,8 @@ function estaAutenticado()
         header('Location: /');
     }
 }
-function debugear($variable) {
+function debugear($variable)
+{
     echo "<pre>";
     var_dump($variable);
     echo "</pre>";
@@ -26,16 +27,42 @@ function debugear($variable) {
 
 //Escapa el HTML
 
-function s($html) : string {
+function s($html): string
+{
     $s = htmlspecialchars($html);
     return $s;
 }
 
-// Validad tipo de contenido
+// Valida tipo de contenido
 
-function validarTipoContenido($tipo) {
+function validarTipoContenido($tipo)
+{
     $tipos = ['vendedor', 'propiedad'];
 
     return in_array($tipo, $tipos);
+}
 
+// Muestra los mensajes de aprobacion de crud
+function mostrarNotificacion($codigo)
+{
+    $mensaje = '';
+
+    switch ($codigo) {
+        case 1:
+            $mensaje = 'Creado correctamente';
+            break;
+
+        case 2:
+            $mensaje = 'Actualizado correctamente';
+            break;
+
+        case 3:
+            $mensaje = 'Eliminado correctamente';
+            break;
+
+        default:
+            $mensaje = false;
+            break;
+    }
+    return $mensaje;
 }
