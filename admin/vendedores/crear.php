@@ -2,53 +2,28 @@
 
 require '../../includes/app.php';
 
-use App\Propiedad;
 use App\Vendedores;
-use Intervention\Image\ImageManagerStatic as Image;
 
 estaAutenticado();
 
-$propiedad = new Propiedad;
-
-// Consulta para obtener todos los vendedores
-$vendedores = Vendedores::all();
+$vendedores = new Vendedores;
 
 //Arreglo con mensaje de errores
-$errores = Propiedad::getErrores();
+$errores = Vendedores::getErrores();
 
-//ejecuta el codigo una vez el usuario envía el formulario
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    //debugear($_POST);
-    // Crea una nueva instancia
-    $propiedad = new Propiedad($_POST['propiedad']);
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {    
+    // Crear una nueva instancia
+    $vendedores = new Vendedores($_POST['vendedores']);
 
-    // Genera un nombre único
-    $nombreImagen = md5(uniqid(rand(), true)) . ".jpg";
+    // Validar que no haya campos vacíos
+    $errores = $vendedores->validar();
 
-    /**Setear la imagen en el servidor 
-    Realiza un resize a la imagen con Intervention */
-    if ($_FILES['propiedad']['tmp_name']['imagen']) {
-        $image = Image::make($_FILES['propiedad']['tmp_name']['imagen'])->fit(800, 600);
-        $propiedad->setImagen($nombreImagen);
-    }
-
-
-    // Validar 
-    $errores = $propiedad->validar();
+    // No hay errores
     if (empty($errores)) {
-
-        // Crear la carpeta para subir imagenes
-        if (!is_dir(CARPETA_IMAGENES)) {
-            mkdir(CARPETA_IMAGENES);
-        }
-
-        // Guarda la imagen en el servidor
-        $image->save(CARPETA_IMAGENES . $nombreImagen);
-
-        // Guarda en la base de datos 
-        $propiedad->guardar();
+        $vendedores->guardar();
     }
 }
+
 if (!isset($_SESSION)) {
     session_start();
 }
@@ -108,8 +83,9 @@ $autenticar = $_SESSION['login'] ?? false;
             <?php } ?>
         </div>
     </header>
+
     <main class="contenedor seccion">
-        <h1>Crear</h1>
+        <h1>Registrar Vendedor(a)</h1> 
 
         <a href="/admin/index.php" class="boton boton-verde">Volver</a>
 
@@ -119,14 +95,14 @@ $autenticar = $_SESSION['login'] ?? false;
             </div>
         <?php endforeach; ?>
 
-        <form class="formulario" method="POST" action="/admin/propiedades/crear.php" enctype="multipart/form-data">
-            <?php include '../../includes/templates/formulario_propiedades.php'; ?>
-            <input type="submit" value="Crear Propiedad" class="boton boton-verde">
+        <form class="formulario" method="POST" action="/admin/vendedores/crear.php" enctype="multipart/form-data">
+            <?php include '../../includes/templates/formulario_vendedores.php'; ?>
+            <input type="submit" value="Registrar Vendedor(a)" class="boton boton-verde">
         </form>
     </main>
     <footer class="footer seccion">
         <div class="contenedor contenedor-footer">
-            <nav class="navegacion">
+            <nav class="navegacion">    
                 <a href="/nosotros.php">Nosotros</a>
                 <a href="/anuncios.php">Anuncios</a>
                 <a href="/blog.php">Blog</a>
@@ -135,15 +111,3 @@ $autenticar = $_SESSION['login'] ?? false;
         </div>
         <p class="copyright">Todos los derechos Reservados 2022 &copy;</p>
     </footer>
-
-    <script src="/build/js/app.js"></script>
-    <script src="/build/js/modernizr.js"></script>
-
-</body>
-
-</html>
-
-<?php
-// Cerrar la conexión
-mysqli_close($db);
-?>

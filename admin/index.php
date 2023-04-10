@@ -4,9 +4,11 @@ require '../includes/app.php';
 estaAutenticado();
 
 use App\Propiedad;
+use App\Vendedores;
 
 //Implementar método para obtener todas las propiedades
 $propiedades = Propiedad::all();
+$vendedores = Vendedores::all();
 
 // Muestra mensaje de confirmación de creación de la propiedad
 $resultado = $_GET['resultado'] ?? null;
@@ -17,17 +19,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($id) {
 
-        // Eliminar el archivo
-        $query = "SELECT imagen FROM propiedades WHERE id = $id";
-        $resultado = mysqli_query($db, $query);
-        $propiedad = mysqli_fetch_assoc($resultado);
-        unlink('../imagenes/' . $propiedad['imagen']);
+        $tipo = $_POST['tipo'];
 
-        $query = "DELETE FROM propiedades WHERE id = $id";
-        $resultado = mysqli_query($db, $query);
+        if (validarTipoContenido($tipo)) {
 
-        if ($resultado) {
-            header('Location: /admin?resultado=3');
+            // Compara lo que se va a eliminar
+            if ($tipo === 'vendedor') {
+                $vendedores = Vendedores::find($id);
+                $vendedores->eliminar();
+            } elseif ($tipo === 'propiedad') {
+                $propiedad = Propiedad::find($id);
+                $propiedad->eliminar();
+            }
         }
     }
 }
@@ -54,31 +57,31 @@ $autenticar = $_SESSION['login'] ?? false;
         <div class="contenedor contenido-header">
             <div class="barra">
 
-            <?php if ($autenticar) : ?>
+                <?php if ($autenticar) : ?>
                     <a href="/admin/index.php">
                     <?php endif; ?>
 
                     <?php if (!$autenticar) : ?>
                         <a href="/index.php">
-                    <?php endif; ?>
-                    <img src="/build/img/logo.svg" alt="Logotipo de Bienes Raices">
-                </a>
-                <div class="mobile-menu">
-                    <img src="/build/img/barras.svg" alt="icono menu responsive">
-
-                </div>
-                <div class="derecha">
-                    <img class="dark-mode-boton" src="/build/img/dark-mode.svg">
-                    <nav class="navegacion">
-                        <a href="/nosotros.php">Nosotros</a>
-                        <a href="/anuncios.php">Anuncios</a>
-                        <a href="/blog.php">Blog</a>
-                        <a href="/contacto.php">Contacto</a>
-                        <?php if ($autenticar) : ?>
-                            <a href="/cerrar-sesion.php">Cerrar Sesión</a>
                         <?php endif; ?>
-                    </nav>
-                </div>
+                        <img src="/build/img/logo.svg" alt="Logotipo de Bienes Raices">
+                        </a>
+                        <div class="mobile-menu">
+                            <img src="/build/img/barras.svg" alt="icono menu responsive">
+
+                        </div>
+                        <div class="derecha">
+                            <img class="dark-mode-boton" src="/build/img/dark-mode.svg">
+                            <nav class="navegacion">
+                                <a href="/nosotros.php">Nosotros</a>
+                                <a href="/anuncios.php">Anuncios</a>
+                                <a href="/blog.php">Blog</a>
+                                <a href="/contacto.php">Contacto</a>
+                                <?php if ($autenticar) : ?>
+                                    <a href="/cerrar-sesion.php">Cerrar Sesión</a>
+                                <?php endif; ?>
+                            </nav>
+                        </div>
 
             </div><!--.barra-->
         </div>
@@ -87,14 +90,16 @@ $autenticar = $_SESSION['login'] ?? false;
     <main class="contenedor seccion">
         <h1>Administrador de Bienes Raices</h1>
         <?php if (intval($resultado) === 1) : ?>
-            <p class="alerta exito">Anuncio Creado Correctamente</p>
+            <p class="alerta exito">Creado Correctamente</p>
         <?php elseif (intval($resultado) === 2) : ?>
-            <p class="alerta exito">Anuncio Actualizado Correctamente</p>
+            <p class="alerta exito">Actualizado Correctamente</p>
         <?php elseif (intval($resultado) === 3) : ?>
-            <p class="alerta exito">Anuncio Eliminado Correctamente</p>
+            <p class="alerta exito">Eliminado Correctamente</p>
         <?php endif; ?>
 
         <a href="/admin/propiedades/crear.php" class="boton boton-verde">Nueva Propiedad</a>
+        <a href="/admin/vendedores/crear.php" class="boton boton-amarillo">Nuevo(a) Vendedor</a>
+        <h2>Propiedades</h2>
         <table class="propiedades">
             <thead>
                 <tr>
@@ -106,7 +111,7 @@ $autenticar = $_SESSION['login'] ?? false;
                 </tr>
             </thead>
             <tbody> <!-- Mostrar los resultados -->
-                <?php foreach($propiedades as $propiedad) : ?>
+                <?php foreach ($propiedades as $propiedad) : ?>
                     <tr>
                         <td class="listado-propiedades"><?php echo $propiedad->id; ?></td>
                         <td class="listado-propiedades"><?php echo $propiedad->titulo; ?></td>
@@ -115,6 +120,7 @@ $autenticar = $_SESSION['login'] ?? false;
                         <td>
                             <form method="POST" class="w-100">
                                 <input type="hidden" name="id" value="<?php echo $propiedad->id; ?>">
+                                <input type="hidden" name="tipo" value="propiedad">
                                 <input type="submit" class="boton-rojo-block" value="Eliminar">
                             </form>
 
@@ -123,7 +129,35 @@ $autenticar = $_SESSION['login'] ?? false;
                     </tr>
                 <?php endforeach; ?>
             </tbody>
+        </table>
+        <h2>Vendedores</h2>
+        <table class="propiedades">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Teléfono</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody> <!-- Mostrar los resultados -->
+                <?php foreach ($vendedores as $vendedor) : ?>
+                    <tr>
+                        <td class="listado-propiedades"><?php echo $vendedor->id; ?></td>
+                        <td class="listado-propiedades"><?php echo $vendedor->nombre . " " . $vendedor->apellido; ?></td>
+                        <td class="listado-propiedades"><?php echo $vendedor->telefono; ?></td>
+                        <td>
+                            <form method="POST" class="w-100">
+                                <input type="hidden" name="id" value="<?php echo $vendedor->id; ?>">
+                                <input type="hidden" name="tipo" value="vendedor">
+                                <input type="submit" class="boton-rojo-block" value="Eliminar">
+                            </form>
 
+                            <a href="/admin/vendedores/actualizar.php?id=<?php echo $vendedor->id; ?>" class="boton-amarillo-block">Actualizar</a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
         </table>
     </main>
     <footer class="footer seccion">
@@ -140,15 +174,12 @@ $autenticar = $_SESSION['login'] ?? false;
 
     <script src="/build/js/app.js"></script>
     <script src="/build/js/modernizr.js"></script>
- 
+
 </body>
 
 </html>
 
 <?php
-// Cerrar la conexión
-mysqli_close($db);
-
 //incluirTemplates('footer');
 // include './includes/templates/footer.php';
 ?>

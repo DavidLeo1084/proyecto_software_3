@@ -256,7 +256,7 @@ h4 {
 }
 
 .boton-amarillo {
-    background-color: #e08709;
+    background-color: #b7c500;
     color: #fff;
     font-weight: 700;
     text-decoration: none;
@@ -290,7 +290,7 @@ h4 {
 }
 
 .boton-verde {
-    background-color: #71b100;
+    background-color: #73ab12a7;
     color: #fff;
     font-weight: 700;
     text-decoration: none;
@@ -643,6 +643,11 @@ h4 {
 .webp .imagen-contacto {
     background-image: url(../img/encuentra.webp);
     /* background-image: url(/build/img/encuentra.webp); */
+}
+
+.imagen-small {
+    width: 20rem;
+    filter: invert(50%);
 }
 
 .imagen-contacto {

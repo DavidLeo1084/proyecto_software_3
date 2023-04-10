@@ -23,3 +23,19 @@ function debugear($variable) {
     echo "</pre>";
     exit;
 }
+
+//Escapa el HTML
+
+function s($html) : string {
+    $s = htmlspecialchars($html);
+    return $s;
+}
+
+// Validad tipo de contenido
+
+function validarTipoContenido($tipo) {
+    $tipos = ['vendedor', 'propiedad'];
+
+    return in_array($tipo, $tipos);
+
+}
