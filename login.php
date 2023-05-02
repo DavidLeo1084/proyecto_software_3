@@ -55,7 +55,7 @@ incluirTemplates('header');
     <?php endforeach; ?>
     <form method="POST" class="formulario">
         <fieldset>
-            <legend>E-  mail y Password</legend>
+            <legend>E-mail y Password</legend>
 
             <label for="email">E-mail</label>
             <input type="email" name="email" placeholder="Tu E-mail" id="email" required>

@@ -1,25 +1,22 @@
 <?php
 
 namespace App;
-// use App\ActiveRecord;
-
 class Vendedores extends ActiveRecord
 {
 
-    protected static $tabla = 'vendedores';
-    protected static $columnasDB = ['id', 'nombre', 'apellido', 'telefono', 'correo', 'salario', 'comision',
-    'cedula', 'direccion', 'contrasenia'];
+    protected static $tabla = 'arriendatarios';
+    protected static $columnasDB = ['id', 'nombre', 'apellido', 'cedula', 'telefono', 'direccion', 'correo',
+    'tarifa'];
 
     public $id;
     public $nombre;
     public $apellido;
-    public $telefono;
-    public $correo;
-    public $salario;
-    public $comision;
     public $cedula;
+    public $telefono;
     public $direccion;
-    public $contrasenia;
+    public $correo;
+    public $tarifa;
+    
     
     public function __construct($args = [])
     {
@@ -27,13 +24,11 @@ class Vendedores extends ActiveRecord
         $this->id = $args['id'] ?? null;
         $this->nombre = $args['nombre'] ?? '';
         $this->apellido = $args['apellido'] ?? '';
-        $this->telefono = $args['telefono'] ?? '';
-        $this->correo = $args['correo'] ?? '';
-        $this->salario = $args['salario'] ?? '';
-        $this->comision = $args['comision'] ?? null;
         $this->cedula = $args['cedula'] ?? '';
+        $this->telefono = $args['telefono'] ?? '';
         $this->direccion = $args['direccion'] ?? '';
-        $this->contrasenia = $args['contrasenia'] ?? '';
+        $this->correo = $args['correo'] ?? '';
+        $this->tarifa = $args['tarifa'] ?? '';
     }
 
     public function validar()
@@ -69,10 +64,6 @@ class Vendedores extends ActiveRecord
 
         if (!$this->direccion) {
             self::$errores[] = "La dirección es obligatoria";
-        }
-
-        if (preg_match('/[0-9]{10}/',!$this->contrasenia)) {
-            self::$errores[] = "La contraseña es obligatoria";
         }
 
         return self::$errores;

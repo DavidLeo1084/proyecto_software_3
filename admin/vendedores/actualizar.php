@@ -1,7 +1,8 @@
 <?php
 
-require '../../includes/app.php';
 use App\Vendedores;
+use Intervention\Image\ImageManagerStatic as Image;
+require '../../includes/app.php';
 estaAutenticado();
 
 // Validar que sea un id válido
@@ -41,7 +42,6 @@ if (!isset($_SESSION)) {
 }
 $autenticar = $_SESSION['login'] ?? false;
 
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -67,16 +67,16 @@ $autenticar = $_SESSION['login'] ?? false;
                     <?php if (!$autenticar) : ?>
                         <a href="/index.php">
                         <?php endif; ?>
-                        <!-- <img src="../src/img/logo.svg" alt="Logotipo de Bienes Raices"> -->
+                        
                         <img src="/build/img/logo.svg" alt="Logotipo de Bienes Raices">
                         </a>
                         <div class="mobile-menu">
-                            <!-- <img src="../src/img/barras.svg" alt="icono menu responsive"> -->
+                            
                             <img src="/build/img/barras.svg" alt="icono menu responsive">
 
                         </div>
                         <div class="derecha">
-                            <!-- <img class="dark-mode-boton" src="../src/img/dark-mode.svg"> -->
+                            
                             <img class="dark-mode-boton" src="/build/img/dark-mode.svg">
                             <nav class="navegacion">
                                 <a href="/nosotros.php">Nosotros</a>
@@ -88,8 +88,8 @@ $autenticar = $_SESSION['login'] ?? false;
                                 <?php endif; ?>
                             </nav>
                         </div>
-            </div>
-            <!--.barra-->
+            </div><!--.barra-->
+            
             <?php if ($inicio) { ?>
                 <h1>Venta de Casas y Departamentos Exclusivos de Lujo</h1>
             <?php } ?>

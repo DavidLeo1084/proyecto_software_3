@@ -13,8 +13,6 @@
     <label for="salario">Salario</label>
     <input type="number" id="salario" name="vendedores[salario]" placeholder="Salario Vendedor(a)" value="<?php echo s($vendedores->salario); ?>">
 
-    <label for="comision">Comisión</label>
-    <input type="number" id="comision" name="vendedores[comision]" placeholder="Comisión Vendedor(a)" value="<?php echo s($vendedores->comision); ?>">
 
 </fieldset>
 
@@ -29,12 +27,5 @@
 
     <label for="correo">Correo Electrónico</label>
     <input type="email" id="correo" name="vendedores[correo]" placeholder="Email Vendedor(a)" value="<?php echo s($vendedores->correo); ?>">
-
-    <label for="contrasenia">Contraseña</label>
-    <input type="password" id="contrasenia" name="vendedores[contrasenia]" placeholder="Contrasenia Vendedor(a)" value="<?php echo s($vendedores->contrasenia); ?>">
-
  
 </fieldset> 
-
-
-

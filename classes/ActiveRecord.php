@@ -22,10 +22,6 @@ class ActiveRecord {
          self::$db = $database;
      }
 
-   
- 
-     
- 
      public function guardar()
      {
          if (!is_null($this->id)) {
@@ -155,6 +151,14 @@ class ActiveRecord {
          $query = "SELECT * FROM " . static::$tabla;
          $resultado = self::consultarSQL($query);
          return $resultado;
+     }
+
+     //Obtiene determinado numero de propiedades a visualizar
+     public static function get($cantidad) {
+        $query = "SELECT * FROM " . static::$tabla . " LIMIT " . $cantidad;
+
+        $resultado = self::consultarSQL($query);
+        return $resultado;
      }
  
      //Buscar propiedad por id

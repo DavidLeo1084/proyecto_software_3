@@ -56,8 +56,6 @@ if (!isset($_SESSION)) {
 }
 $autenticar = $_SESSION['login'] ?? false;
 
-// include './includes/templates/header.php';
-// incluirTemplates('header');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -67,7 +65,6 @@ $autenticar = $_SESSION['login'] ?? false;
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bienes Raices</title>
-    <!-- <link rel="stylesheet" href="/build/css/app.css"> -->
     <link rel="stylesheet" href="../../build/css/app.css">
 
 </head>
@@ -84,17 +81,15 @@ $autenticar = $_SESSION['login'] ?? false;
                         <a href="/index.php">
                         <?php endif; ?>
 
-
-                        <!-- <img src="../src/img/logo.svg" alt="Logotipo de Bienes Raices"> -->
                         <img src="/build/img/logo.svg" alt="Logotipo de Bienes Raices">
                         </a>
                         <div class="mobile-menu">
-                            <!-- <img src="../src/img/barras.svg" alt="icono menu responsive"> -->
+                           
                             <img src="/build/img/barras.svg" alt="icono menu responsive">
 
                         </div>
                         <div class="derecha">
-                            <!-- <img class="dark-mode-boton" src="../src/img/dark-mode.svg"> -->
+                            
                             <img class="dark-mode-boton" src="/build/img/dark-mode.svg">
                             <nav class="navegacion">
                                 <a href="/nosotros.php">Nosotros</a>
@@ -106,10 +101,8 @@ $autenticar = $_SESSION['login'] ?? false;
                                 <?php endif; ?>
                             </nav>
                         </div>
-
-
-            </div>
-            <!--.barra-->
+            </div><!--.barra-->
+            
             <?php if ($inicio) { ?>
                 <h1>Venta de Casas y Departamentos Exclusivos de Lujo</h1>
             <?php } ?>
