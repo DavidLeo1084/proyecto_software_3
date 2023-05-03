@@ -35,7 +35,7 @@ $autenticar = $_SESSION['login'] ?? false;
                             <img src="build/img/barras.svg" alt="icono menu responsive">
                         </div>
                         <div class="derecha">
-                           
+
                             <img class="dark-mode-boton bright-mode-boton" src="build/img/dark-mode.svg">
 
                             <nav class="navegacion">
@@ -48,9 +48,25 @@ $autenticar = $_SESSION['login'] ?? false;
                                 <?php endif; ?>
 
                                 <?php if (!$autenticar) : ?>
-                                    <a href="login.php">Iniciar Sesión</a>
+
+                                    <ul class="desplegable">
+                                        <li class="alinear-li"><a href="">Iniciar Sesión</a>
+
+                                            <ul class="desple">
+                                                <li><a href="login.php">Sesión Administrador</a></li>
+                                                <li><a href="login_usuario.php">Sesión Usuario</a></li>
+                                            </ul>
+
+                                        </li>
+
+                                    </ul>
+
+
                                 <?php endif; ?>
                             </nav>
+
+
+
                         </div>
             </div><!--.barra-->
             <?php if ($inicio) { ?>

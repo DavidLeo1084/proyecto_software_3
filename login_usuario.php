@@ -16,23 +16,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!$password) {
         $errores[] = "El password es obligatorio";
     }
+    
     if (empty($errores)) {
         // Revisar si hay errores
-        $query = "SELECT * FROM usuarios WHERE email = '$email'";
+        $query = "SELECT * FROM vendedores WHERE email = '$email'";
         $resultado = mysqli_query($db, $query);
         // Consultar si hay existe el usuario con el email buscado
+        
         if ($resultado->num_rows) {
             // Validación del password
             $usuario = mysqli_fetch_assoc($resultado);
+            
             // Verificar si el password es correcto o no es correcto
-            $autenticar = password_verify($password, $usuario['password']);
-
+            $autenticar = $password === $usuario['password'];
+        
+            // var_dump($password);
+            // exit;
             if ($autenticar) {
                 session_start();
                 // LLenar el arreglo de la sesion
                 $_SESSION['usuario'] = $usuario['email'];
                 $_SESSION['login'] = true;
-                header('Location:/admin/index.php');
+                header('Location:/admin/vendedores/index.php');
                 
             } else {
                 $errores[] = "El password es incorrecto";
@@ -47,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 incluirTemplates('header');
 ?>
 <main class="contenedor seccion contenido-centrado">
-    <h1>Iniciar Sesión como Administrador</h1>
+    <h1>Iniciar Sesión como Vendedor(a)</h1>
     <?php foreach ($errores as $error) : ?>
         <div class="alerta error">
             <?php echo $error; ?>
@@ -55,7 +60,7 @@ incluirTemplates('header');
     <?php endforeach; ?>
     <form method="POST" class="formulario">
         <fieldset>
-            <legend>E-mail y Password</legend>
+            <legend>E-mail y Password del Vendedor(a)</legend>
 
             <label for="email">E-mail</label>
             <input type="email" name="email" placeholder="Tu E-mail" id="email" required>

@@ -27,11 +27,11 @@
     <label for="direccion">Dirección</label>
     <input type="text" id="direccion" name="vendedores[direccion]" placeholder="Dirección Vendedor(a)" value="<?php echo s($vendedores->direccion); ?>">
 
-    <label for="correo">Correo Electrónico</label>
-    <input type="email" id="correo" name="vendedores[correo]" placeholder="Email Vendedor(a)" value="<?php echo s($vendedores->correo); ?>">
+    <label for="email">Correo Electrónico</label>
+    <input type="email" id="email" name="vendedores[correo]" placeholder="Email Vendedor(a)" value="<?php echo s($vendedores->email); ?>">
 
-    <label for="contrasenia">Contraseña</label>
-    <input type="password" id="contrasenia" name="vendedores[contrasenia]" placeholder="Contrasenia Vendedor(a)" value="<?php echo s($vendedores->contrasenia); ?>">
+    <label for="password">Contraseña</label>
+    <input type="password" id="contrasenia" name="vendedores[contrasenia]" placeholder="Contrasenia Vendedor(a)" value="<?php echo s($vendedores->password); ?>">
 
  
 </fieldset> 
