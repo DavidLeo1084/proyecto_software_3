@@ -3,7 +3,7 @@ require 'includes/app.php';
 
 use App\Propiedad;
 
-$id = $_GET['id'];
+$id = $_GET['id'];  
 $id = filter_var($id, FILTER_VALIDATE_INT);
 
 if (!$id) {

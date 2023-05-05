@@ -12,7 +12,9 @@ $id = $_GET['id'];
 $id = filter_var($id, FILTER_VALIDATE_INT);
 
 //Implementar método para obtener todas las propiedades
-$propiedades = Propiedad::all();
+$propiedades = Propiedad::selected($id);
+
+
 
 // Muestra mensaje de confirmación de creación de la propiedad
 $resultado = $_GET['resultado'] ?? null;
@@ -65,7 +67,7 @@ $autenticar = $_SESSION['login'] ?? false;
             <div class="barra">
 
                 <?php if ($autenticar) : ?>
-                    <a href="/admin/vendedores/index.php">
+                    <a href="/admin/index.php">
                     <?php endif; ?>
 
                     <?php if (!$autenticar) : ?>
@@ -80,10 +82,10 @@ $autenticar = $_SESSION['login'] ?? false;
                         <div class="derecha">
                             <img class="dark-mode-boton" src="/build/img/dark-mode.svg">
                             <nav class="navegacion">
-                                <!-- <a href="/nosotros.php">Nosotros</a>
+                                <a href="/nosotros.php">Nosotros</a>
                                 <a href="/anuncios.php">Anuncios</a>
                                 <a href="/blog.php">Blog</a>
-                                <a href="/contacto.php">Contacto</a> -->
+                                <a href="/contacto.php">Contacto</a>
                                 <?php if ($autenticar) : ?>
                                     <a href="/cerrar-sesion.php">Cerrar Sesión</a>
                                 <?php endif; ?>
@@ -95,16 +97,15 @@ $autenticar = $_SESSION['login'] ?? false;
     </header>
 
     <main class="contenedor seccion">
-        <h1>Bienes Raices Asignados</h1>
+        <h1>Administrador de Bienes Raices</h1>
         <?php $mensaje = mostrarNotificacion(intval($resultado));
         if ($mensaje) { ?>
             <p class="alerta exito"><?php echo s($mensaje) ?></p>
         <?php  } ?>
 
 
-        <!-- <a href="/admin/propiedades/crear.php" class="boton boton-verde">Nueva Propiedad</a> -->
-        <!-- <a href="/admin/vendedores/crear.php" class="boton boton-amarillo">Nuevo(a) Vendedor</a>  -->
-
+        <!-- <a href="/admin/propiedades/crear.php" class="boton boton-verde">Nueva Propiedad</a>
+        <a href="/admin/vendedores/crear.php" class="boton boton-amarillo">Nuevo(a) Vendedor</a> -->
         <h2>Propiedades</h2>
         <table class="propiedades">
             <thead>
@@ -117,17 +118,20 @@ $autenticar = $_SESSION['login'] ?? false;
                 </tr>
             </thead>
             <tbody> <!-- Mostrar los resultados -->
-                
+                <?php foreach ($propiedades as $propiedad) : ?>
                     <tr>
-                        
-
-                            <a href="/admin/vendedores/index_2.php?id=<?php echo 13; ?>" class="boton boton-amarillo">Mis asignaciones</a>
+                        <td class="listado-propiedades"><?php echo $propiedad->id; ?></td>
+                        <td class="listado-propiedades"><?php echo $propiedad->titulo; ?></td>
+                        <td class="listado-propiedades"><img src="/imagenes/<?php echo $propiedad->imagen; ?>" class="imagen-tabla"></td>
+                        <td class="listado-propiedades">$ <?php echo $propiedad->precio; ?></td>
+                        <td>
+                            
                         </td>
                     </tr>
-                
+                <?php endforeach; ?>
             </tbody>
         </table>
-
+      
     </main>
     <footer class="footer seccion">
         <div class="contenedor contenedor-footer">
@@ -147,3 +151,8 @@ $autenticar = $_SESSION['login'] ?? false;
 </body>
 
 </html>
+
+<?php
+//incluirTemplates('footer');
+// include './includes/templates/footer.php';
+?>

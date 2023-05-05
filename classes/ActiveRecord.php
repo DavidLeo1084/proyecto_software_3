@@ -69,7 +69,7 @@ class ActiveRecord {
          $query .= " LIMIT 1 ";
  
          $resultado = self::$db->query($query);
- 
+         
          if ($resultado) {
              // Redireccionar al usuario
              header('Location: /admin?resultado=2');
@@ -151,6 +151,16 @@ class ActiveRecord {
          $query = "SELECT * FROM " . static::$tabla;
          $resultado = self::consultarSQL($query);
          return $resultado;
+     }
+     // Enlistar todos las propiedades asignados a un vendedor en especifico
+     public static function selected($id) {
+        var_dump($id);
+
+        $query = "SELECT * FROM propiedades WHERE vendedores_id = $id";
+        // $query = "SELECT * FROM " . static::$tabla . " WHERE vendedores_id = $id";
+        
+        $resultado = self::consultarSQL($query);
+        return $resultado;
      }
 
      //Obtiene determinado numero de propiedades a visualizar

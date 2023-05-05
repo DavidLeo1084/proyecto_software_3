@@ -17,8 +17,9 @@ $resultado = $_GET['resultado'] ?? null;
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Validar id
-    $id = $_POST['id'];
+    $id = $_POST['id']; 
     $id = filter_var($id, FILTER_VALIDATE_INT);
+    
 
     if ($id) {
 

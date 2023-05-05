@@ -1,6 +1,10 @@
 <?php
 require 'includes/app.php';
-// require 'includes/config/database.php';
+
+// Importar clases
+use App\Propiedad;
+use App\Vendedores;
+
 $db = conectarDB();
 $errores = [];
 
@@ -16,20 +20,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!$password) {
         $errores[] = "El password es obligatorio";
     }
-    
+
     if (empty($errores)) {
         // Revisar si hay errores
         $query = "SELECT * FROM vendedores WHERE email = '$email'";
         $resultado = mysqli_query($db, $query);
         // Consultar si hay existe el usuario con el email buscado
-        
+
         if ($resultado->num_rows) {
             // Validación del password
             $usuario = mysqli_fetch_assoc($resultado);
-            
+
             // Verificar si el password es correcto o no es correcto
             $autenticar = $password === $usuario['password'];
-        
+
             // var_dump($password);
             // exit;
             if ($autenticar) {
@@ -38,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['usuario'] = $usuario['email'];
                 $_SESSION['login'] = true;
                 header('Location:/admin/vendedores/index.php');
-                
+
             } else {
                 $errores[] = "El password es incorrecto";
             }
@@ -70,6 +74,7 @@ incluirTemplates('header');
         </fieldset>
 
         <input type="submit" value="Iniciar Sesión" class="boton boton-verde">
+        
     </form>
 </main>
 <?php

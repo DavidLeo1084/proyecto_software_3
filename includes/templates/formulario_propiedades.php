@@ -29,6 +29,8 @@
 
     <label for="estacionamiento">Estacionamiento</label>
     <input type="number" id="estacionamiento" name="propiedad[estacionamiento]" placeholder="Ej:3" min="1" max="9" value="<?php echo s($propiedad->estacionamiento); ?>">
+
+
 </fieldset>
 
 <fieldset>
@@ -36,16 +38,9 @@
 
     <label for="vendedores">Vendedor</label>
     <select name="propiedad[vendedores_id]" id="vendedores">
-         <option selected value="" disabled selected>-- Seleccione --</option>
-        <?php foreach($vendedores as $vendedores) { ?>
-            <option
-               <?php echo $propiedad->vendedores_id === $vendedores->id ? 'selected' : ''; ?> 
-             value="<?php echo s($vendedores->id); ?>"
-             ><?php echo s($vendedores->nombre) . " " . s($vendedores->apellido); ?> </option>
-            <?php } ?>
+        <option selected value="" disabled selected>-- Seleccione --</option>
+        <?php foreach ($vendedores as $vendedores) { ?>
+            <option <?php echo $propiedad->vendedores_id === $vendedores->id ? 'selected' : ''; ?> value="<?php echo s($vendedores->id); ?>"><?php echo s($vendedores->nombre) . " " . s($vendedores->apellido); ?> </option>
+        <?php } ?>
     </select>
 </fieldset>
-        
-
-       
-       
