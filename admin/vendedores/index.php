@@ -10,40 +10,22 @@ use App\Vendedores;
 // Validar la URL por ID válido
 $id = $_GET['id'];
 $id = filter_var($id, FILTER_VALIDATE_INT);
+// debugear($id);
+
+//Implementar método para obtener todas las propiedades segun vendedor
+$propiedades = Propiedad::selected($id);
 
 //Implementar método para obtener todas las propiedades
-$propiedades = Propiedad::all();
+// $propiedades = Propiedad::all();
+// $vendedores = Vendedores::all();
+$vendedor = Vendedores::find($id);
 
+// debugear($_SESSION);
 // Muestra mensaje de confirmación de creación de la propiedad
 $resultado = $_GET['resultado'] ?? null;
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    // Validar id
-    $id = $_POST['id']; 
-    $id = filter_var($id, FILTER_VALIDATE_INT);
-    
 
-    if ($id) {
-
-        $tipo = $_POST['tipo'];
-
-        // Define tipo de objeto a eliminar
-        if (validarTipoContenido($tipo)) {
-            // Compara lo que se va a eliminar
-            if ($tipo === 'vendedor') {
-                $vendedores = Vendedores::find($id);
-                $vendedores->eliminar();
-            } elseif ($tipo === 'propiedad') {
-                $propiedad = Propiedad::find($id);
-                $propiedad->eliminar();
-            }
-        }
-    }
-}
-if (!isset($_SESSION)) {
-    session_start();
-}
 $autenticar = $_SESSION['login'] ?? false;
 ?>
 <!DOCTYPE html>
@@ -65,7 +47,7 @@ $autenticar = $_SESSION['login'] ?? false;
             <div class="barra">
 
                 <?php if ($autenticar) : ?>
-                    <a href="/admin/vendedores/index.php">
+                    <a href="/admin/vendedores/index.php?id=<?php echo $vendedor->id; ?>">
                     <?php endif; ?>
 
                     <?php if (!$autenticar) : ?>
@@ -95,7 +77,7 @@ $autenticar = $_SESSION['login'] ?? false;
     </header>
 
     <main class="contenedor seccion">
-        <h1>Bienes Raices Asignados</h1>
+        <!-- <h1>Bienes Raices del Café</h1> -->
         <?php $mensaje = mostrarNotificacion(intval($resultado));
         if ($mensaje) { ?>
             <p class="alerta exito"><?php echo s($mensaje) ?></p>
@@ -105,26 +87,36 @@ $autenticar = $_SESSION['login'] ?? false;
         <!-- <a href="/admin/propiedades/crear.php" class="boton boton-verde">Nueva Propiedad</a> -->
         <!-- <a href="/admin/vendedores/crear.php" class="boton boton-amarillo">Nuevo(a) Vendedor</a>  -->
 
-        <h2>Propiedades</h2>
+        <h1>Listado de Propiedades de  <?php echo $vendedor->nombre . " " .$vendedor->apellido ?></h1>
+        <a href="/admin/vendedores/index.php?id=<?php echo $vendedor->id; ?>" class="boton boton-verde">Volver</a>
         <table class="propiedades">
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Titulo</th>
-                    <th>Imagen</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
                     <th>Precio</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
             <tbody> <!-- Mostrar los resultados -->
-                
+                <?php foreach ($propiedades as $propiedad) : ?>
                     <tr>
-                        
+                        <td class="listado-propiedades"><?php echo $propiedad->id; ?></td>
+                        <td class="listado-propiedades"><?php echo $propiedad->titulo; ?></td>
+                        <td class="listado-propiedades"><img src="/imagenes/<?php echo $propiedad->imagen; ?>" class="imagen-tabla"></td>
+                        <td class="listado-propiedades">$ <?php echo $propiedad->precio; ?></td>
+                        <td>
+                            <form method="POST" class="w-100">
+                                <input type="hidden" name="id" value="<?php echo $vendedor->id; ?>">
+                                <input type="hidden" name="tipo" value="propiedad">
+                                <input type="submit" class="boton-rojo-block" value="Eliminar">
+                            </form>
+                            <a href="/admin/vendedores/index_2.php?id=<?php echo $vendedor->id; ?>" class="boton-amarillo-block">Actualizar</a>
 
-                            <a href="/admin/vendedores/index_2.php?id=<?php echo 13; ?>" class="boton boton-amarillo">Mis asignaciones</a>
                         </td>
                     </tr>
-                
+                <?php endforeach; ?>
             </tbody>
         </table>
 

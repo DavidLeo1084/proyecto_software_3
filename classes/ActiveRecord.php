@@ -154,10 +154,10 @@ class ActiveRecord {
      }
      // Enlistar todos las propiedades asignados a un vendedor en especifico
      public static function selected($id) {
-        var_dump($id);
+        
 
-        $query = "SELECT * FROM propiedades WHERE vendedores_id = $id";
-        // $query = "SELECT * FROM " . static::$tabla . " WHERE vendedores_id = $id";
+        // $query = "SELECT * FROM propiedades WHERE vendedores_id = $id";
+        $query = "SELECT * FROM " . static::$tabla . " WHERE vendedores_id = $id";
         
         $resultado = self::consultarSQL($query);
         return $resultado;

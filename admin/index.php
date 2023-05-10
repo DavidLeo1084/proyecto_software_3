@@ -15,7 +15,6 @@ $vendedores = Vendedores::all();
 $resultado = $_GET['resultado'] ?? null;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
     // Validar id
     $id = $_POST['id']; 
     $id = filter_var($id, FILTER_VALIDATE_INT);
@@ -101,7 +100,7 @@ $autenticar = $_SESSION['login'] ?? false;
 
         <a href="/admin/propiedades/crear.php" class="boton boton-verde">Nueva Propiedad</a>
         <a href="/admin/vendedores/crear.php" class="boton boton-amarillo">Nuevo(a) Vendedor</a>
-        <h2>Propiedades</h2>
+        <h2>Listado General de Propiedades</h2>
         <table class="propiedades">
             <thead>
                 <tr>
@@ -156,6 +155,8 @@ $autenticar = $_SESSION['login'] ?? false;
                             </form>
 
                             <a href="/admin/vendedores/actualizar.php?id=<?php echo $vendedor->id; ?>" class="boton-amarillo-block">Actualizar</a>
+                            <a href="/admin/vendedores/index.php?id=<?php echo $vendedor->id; ?>" class="boton-amarillo-block">Ver Asignaciones</a>
+
                         </td>
                     </tr>
                 <?php endforeach; ?>

@@ -7,7 +7,7 @@ use App\Propiedad;
 if ($_SERVER['SCRIPT_NAME'] === '/anuncios.php') {
     $propiedades = Propiedad::all();
 }else {
-    $propiedades = Propiedad::get(4);
+    $propiedades = Propiedad::get(3);
 }
 
 

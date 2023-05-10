@@ -5,6 +5,7 @@ require 'includes/app.php';
 use App\Propiedad;
 use App\Vendedores;
 
+$vendedores = Vendedores::all();
 $db = conectarDB();
 $errores = [];
 
@@ -40,9 +41,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 session_start();
                 // LLenar el arreglo de la sesion
                 $_SESSION['usuario'] = $usuario['email'];
+                $_SESSION['usuario'] = $usuario;
                 $_SESSION['login'] = true;
-                header('Location:/admin/vendedores/index.php');
+                foreach ($vendedores as $vendedor) :
+                    if ($vendedor->id === $usuario['id'] ) {
+                        // var_dump($vendedor->id);
+                        // exit;
+                        header('Location:/admin/vendedores/index.php'. '?' . 'id=' . $vendedor->id);
+                    }
 
+                endforeach;
+
+                // debugear($usuario);
+
+                
             } else {
                 $errores[] = "El password es incorrecto";
             }
@@ -62,7 +74,7 @@ incluirTemplates('header');
             <?php echo $error; ?>
         </div>
     <?php endforeach; ?>
-    <form method="POST" class="formulario">
+    < <form method="POST" class="formulario">
         <fieldset>
             <legend>E-mail y Password del Vendedor(a)</legend>
 
@@ -74,8 +86,9 @@ incluirTemplates('header');
         </fieldset>
 
         <input type="submit" value="Iniciar Sesión" class="boton boton-verde">
-        
-    </form>
+
+        </form>
+
 </main>
 <?php
 incluirTemplates('footer');
