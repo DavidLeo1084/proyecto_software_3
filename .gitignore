@@ -6,3 +6,15 @@ gulpfile.js
 package.json
 package-lock.json
 .env
+login.php
+login_usuario.php
+nosotros.php
+formulario.php
+entrada.php
+contacto.php
+cerrar-sesion.php
+blog.php
+base.php
+anuncios.php
+anuncio.php
+/admin/

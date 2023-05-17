@@ -1,4 +1,4 @@
-<fieldset>
+    <fieldset>
     <legend>Información General</legend>
 
     <label for="nombre">Nombre</label>
