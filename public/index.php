@@ -40,7 +40,7 @@ $router->get('/login', [Login_controller::class, 'login']);
 $router->post('/login', [Login_controller::class, 'login']);
 $router->get('/logout', [Login_controller::class, 'logout']);
 
-$router->get('/login_usuario', [Login_controller::class, 'login_usuario']);
+$router->post('/login_usuario', [Login_controller::class, 'login_usuario']);
 
 
 
