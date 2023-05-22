@@ -23,7 +23,7 @@ class Paginas_controller
     public static function nosotros(Router $router)
     {
 
-        $router->vista('paginas/nosotros');
+        $router->vista('paginas/nosotros', []);
     }
 
     public static function propiedades(Router $router)

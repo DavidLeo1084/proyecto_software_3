@@ -62,6 +62,7 @@
                     <td class="listado-propiedades"><?php echo $vendedor->nombre . " " . $vendedor->apellido; ?></td>
                     <td class="listado-propiedades"><?php echo $vendedor->telefono; ?></td>
                     <td>
+                        <!-- <form method="POST" class="w-100" action="/vendedores/eliminar"> -->
                         <form method="POST" class="w-100" action="/vendedores/eliminar">
                             <input type="hidden" name="id" value="<?php echo $vendedor->id; ?>">
                             <input type="hidden" name="tipo" value="vendedor">

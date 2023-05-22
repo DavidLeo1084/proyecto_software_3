@@ -25,18 +25,24 @@ class Router
         $auth = $_SESSION['login'] ?? null;
 
         //Arreglo de rutas protegidas
-        $rutas_protegidas = [
-            '/admin', '/propiedades/crear', '/propiedades/actualizar', '/propiedades/eliminar',
-            '/vendedores/crear', '/vendedores/actualizar', '/vendedores/eliminar'
-        ];
+        // $rutas_protegidas = [
+        //     '/admin', '/propiedades/crear', '/propiedades/actualizar', '/propiedades/eliminar',
+        //     '/vendedores/crear', '/vendedores/actualizar', '/vendedores/eliminar'
+        // ];
+        $rutas_protegidas = [];
 
-        $urlActual = $_SERVER['REQUEST_URI'] === '' ? '/' : $_SERVER['REQUEST_URI'];
+        // $urlActual = $_SERVER['PATH_INFO'] === '' ? '/' : $_SERVER['REQUEST_URI'];
+        $urlActual = $_SERVER['PATH_INFO'] ?? '/';
+        
         $metodo = $_SERVER['REQUEST_METHOD'];
 
         if ($metodo === 'GET') {
             $fn = $this->rutasGET[$urlActual] ?? null;
+           
+             
         } else {
             $fn = $this->rutasPOST[$urlActual] ?? null;
+            
         }
 
         //Proteger las rutas
@@ -44,12 +50,15 @@ class Router
             header('Location: /');
         }
 
-
+        
         if ($fn) {
             // La url existe y hay una funcion asociada
+            
             call_user_func($fn, $this);
+            //   debugear($fn);  
         } else {
             echo "pagina no encontrada Error 404";
+            // debugear($fn); 
         }
     }
 
@@ -62,7 +71,7 @@ class Router
         }
 
         ob_start();  // Almacenamiento en memoria durante un momento
-        include __DIR__ . "/view/view.php";
+        include __DIR__ . "/view/$view.php";
         $contenido = ob_get_clean();  // Limpia el buffer de la memoria
         include __DIR__ . "/view/layout.php";
     }

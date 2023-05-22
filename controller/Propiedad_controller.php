@@ -14,6 +14,22 @@ class Propiedad_controller
     {
 
         $propiedades = Propiedad::all();
+       
+
+        // Muestra mensaje de confirmación de creación de la propiedad
+        $resultado = $_GET['resultado'] ?? null;
+
+        $router->vista('paginas/index', [
+            'propiedades' => $propiedades,
+            'resultado' => $resultado,
+            
+        ]); 
+    }
+
+    public static function admin(Router $router)
+    {
+
+        $propiedades = Propiedad::all();
         $vendedores = Vendedores::all();
 
         // Muestra mensaje de confirmación de creación de la propiedad
@@ -23,7 +39,7 @@ class Propiedad_controller
             'propiedades' => $propiedades,
             'resultado' => $resultado,
             'vendedores' => $vendedores
-        ]);
+        ]); 
     }
 
 
@@ -31,7 +47,7 @@ class Propiedad_controller
     {
         $propiedad = new Propiedad;
         $vendedores = Vendedores::all();
-
+        
         //Arreglo con mensaje de errores
         $errores = Propiedad::getErrores();
 
@@ -77,8 +93,9 @@ class Propiedad_controller
     public static function actualizar(Router $router)
     {
         $id = validar_direccionar('/admin');
-
+        
         $propiedad = Propiedad::find($id);
+        
         $vendedores = Vendedores::all();
 
         $errores = Propiedad::getErrores();
@@ -87,6 +104,7 @@ class Propiedad_controller
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Asignar los atributos
             $args = $_POST['propiedad'];
+            
             $propiedad->sincronizar($args);
 
             // validación

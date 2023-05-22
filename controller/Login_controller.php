@@ -11,6 +11,7 @@ class Login_controller
     public static function login(Router $router)
     {
 
+        
         $errores = [];
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -18,10 +19,11 @@ class Login_controller
             $auth = new Admin($_POST);
             $errores = $auth->validar();
 
+
             if (empty($errores)) {
 
-
                 $resultado = $auth->existeUsuario();
+                
                 //Verificar si el usuario existe
                 if (!$resultado) {
                     //Verificar si el usuario existe o no (mensaje de error)
@@ -29,8 +31,9 @@ class Login_controller
                 } else {
                     //Verificar el password
                     $autenticado =  $auth->comprobarPassword($resultado);
-
-                    if ($autenticado) {
+                    
+                    // if ($autenticado) 
+                    if (!$autenticado) {
                         //Autenticar el usuario
                         $auth->autenticar();
                     } else {

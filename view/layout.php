@@ -19,6 +19,7 @@ if(!isset($inicio)) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bienes Raices</title>
     <link rel="stylesheet" href="/../../build/css/app.css">
+    <!-- <link rel="stylesheet" href="../public/build/css/app.css"> -->
 
 </head>
 
@@ -28,16 +29,20 @@ if(!isset($inicio)) {
             <div class="barra">
 
                 <?php if ($autenticar) : ?>
-                    <a href="/admin/index.php">
+                    <!-- <a href="/admin/index.php"> -->
+                    <a href="/admin">
                     <?php endif; ?>
 
                     <?php if (!$autenticar) : ?>
-                        <a href="/index.php">
+                        <!-- <a href="/index.php"> -->
+                        <a href="/">
                         <?php endif; ?>
-                        <img src="build/img/logo.svg" alt="Logotipo de Bienes Raices">
+                        <img src="../build/img/logo.svg" alt="Logotipo de Bienes Raices">
+                        <!-- <img src="../public/build/img/logo.svg" alt="Logotipo de Bienes Raices"> -->
                         </a>
                         <div class="mobile-menu">
                             <img src="build/img/barras.svg" alt="icono menu responsive">
+                            <!-- <img src="../public/build/img/barras.svg" alt="icono menu responsive"> -->
                         </div>
                         <div class="derecha">
 
@@ -58,8 +63,8 @@ if(!isset($inicio)) {
                                         <li class="alinear-li"><a href="">Iniciar Sesión</a>
 
                                             <ul class="desple">
-                                                <li><a href="login.php">Sesión Administrador</a></li>
-                                                <li><a href="login_usuario.php">Sesión Usuario</a></li>
+                                                <li><a href="/login">Sesión Administrador</a></li>
+                                                <li><a href="/login_usuario">Sesión Usuario</a></li>
                                             </ul>
 
                                         </li>
@@ -85,17 +90,19 @@ if(!isset($inicio)) {
     <footer class="footer seccion">
         <div class="contenedor contenedor-footer">
             <nav class="navegacion">
-                <a href="nosotros.php">Nosotros</a>
-                <a href="anuncios.php">Anuncios</a>
-                <a href="blog.php">Blog</a>
-                <a href="contacto.php">Contacto</a>
+                <a href="/nosotros">Nosotros</a>
+                <a href="/propiedades">Anuncios</a>
+                <a href="/blog">Blog</a>
+                <a href="/contacto">Contacto</a>
             </nav>
         </div>
         <p class="copyright">Todos los derechos Reservados 2022 &copy;</p>
     </footer>
 
     <script src="/build/js/app.js"></script>
+    <!-- <script src="../public/build/js/app.js"></script> -->
     <script src="/build/js/modernizr.js"></script> 
+    <!-- <script src="../public/build/js/modernizr.js"></script>  -->
     
 </body>
 
