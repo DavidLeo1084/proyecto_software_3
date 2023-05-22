@@ -11,7 +11,7 @@ use Controller\Paginas_controller;
 $router = new Router();
 
 //URl´s privadas
-$router->get('/admin', [Propiedad_controller::class, 'index']);
+$router->get('/admin', [Propiedad_controller::class, 'admin']);
 $router->get('/propiedades/crear', [Propiedad_controller::class, 'crear']);
 $router->post('/propiedades/crear', [Propiedad_controller::class, 'crear']);
 $router->get('/propiedades/actualizar', [Propiedad_controller::class, 'actualizar']);
@@ -37,8 +37,10 @@ $router->post('/contacto', [Paginas_controller::class, 'contacto']);
 
 // Login y autenticación
 $router->get('/login', [Login_controller::class, 'login']);
-$router->post('/logout', [Login_controller::class, 'logout']);
-$router->get('/login', [Login_controller::class, 'login']);
+$router->post('/login', [Login_controller::class, 'login']);
+$router->get('/logout', [Login_controller::class, 'logout']);
+
+$router->get('/login_usuario', [Login_controller::class, 'login_usuario']);
 
 
 
