@@ -1,1 +1,1 @@
-web: vendor/bin/railwa-php-apache2 public/
+web: vendor/bin/railway-php-apache2 public/
