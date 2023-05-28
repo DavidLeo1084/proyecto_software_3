@@ -59,8 +59,8 @@ class Propiedad_controller
             // Genera un nombre único
             $nombreImagen = md5(uniqid(rand(), true)) . ".jpg";
 
-            /**Setear la imagen en el servidor 
-    Realiza un resize a la imagen con Intervention */
+            
+    // Realiza un resize a la imagen con Intervention */
             if ($_FILES['propiedad']['tmp_name']['imagen']) {
                 $image = Image::make($_FILES['propiedad']['tmp_name']['imagen'])->fit(800, 600);
                 $propiedad->setImagen($nombreImagen);
