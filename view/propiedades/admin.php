@@ -13,6 +13,7 @@
     <a href="/vendedores/crear" class="boton boton-amarillo">Nuevo(a) Vendedor</a>
 
     <h2>Listado General de Propiedades</h2>
+
     <table class="propiedades">
         <thead>
             <tr>
@@ -23,7 +24,7 @@
                 <th>Acciones</th>
             </tr>
         </thead>
-        <tbody> <!-- Mostrar los resultados -->
+        <tbody>
             <?php foreach ($propiedades as $propiedad) : ?>
                 <tr>
                     <td class="listado-propiedades"><?php echo $propiedad->id; ?></td>
@@ -55,14 +56,14 @@
                 <th>Acciones</th>
             </tr>
         </thead>
-        <tbody> <!-- Mostrar los resultados -->
+        <tbody>
             <?php foreach ($vendedores as $vendedor) : ?>
                 <tr>
                     <td class="listado-propiedades"><?php echo $vendedor->id; ?></td>
                     <td class="listado-propiedades"><?php echo $vendedor->nombre . " " . $vendedor->apellido; ?></td>
                     <td class="listado-propiedades"><?php echo $vendedor->telefono; ?></td>
                     <td>
-                        <!-- <form method="POST" class="w-100" action="/vendedores/eliminar"> -->
+
                         <form method="POST" class="w-100" action="/vendedores/eliminar">
                             <input type="hidden" name="id" value="<?php echo $vendedor->id; ?>">
                             <input type="hidden" name="tipo" value="vendedor">

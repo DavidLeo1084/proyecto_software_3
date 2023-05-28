@@ -34,8 +34,8 @@ class Login_controller
                     //Verificar el password
                     $autenticado =  $auth->comprobarPassword($resultado);
                     
-                    // if ($autenticado) 
-                    if (!$autenticado) {
+                    // if (!$autenticado) 
+                    if ($autenticado) {
                         //Autenticar el usuario
                         $auth->autenticar();
                     } else {
@@ -90,9 +90,6 @@ class Login_controller
             'errores' => $errores
         ]);
     }
-
-
-    
 
     public static function logout()
     {

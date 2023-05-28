@@ -1,6 +1,6 @@
 <div class="iconos-nosotros">
             <div class="icono">
-                <!-- <img src="src/img/icono1.svg" alt="Icono Seguridad" loading="lazy"> -->
+                
                 <img src="build/img/icono1.svg" alt="Icono Seguridad" loading="lazy">
                 <h3>Seguridad</h3>
                 <p>Pellentesque et tellus eget urna lobortis sollicitudin. Vestibulum a justo finibus, bibendum est at,
@@ -9,7 +9,7 @@
             </div>
 
             <div class="icono">
-                <!-- <img src="src/img/icono2.svg" alt="Icono Precio" loading="lazy"> -->
+                
                 <img src="build/img/icono2.svg" alt="Icono Precio" loading="lazy">
                 <h3>Precio</h3>
                 <p>Pellentesque et tellus eget urna lobortis sollicitudin. Vestibulum a justo finibus, bibendum est at,
@@ -18,7 +18,7 @@
             </div>
 
             <div class="icono">
-                <!-- <img src="src/img/icono3.svg" alt="Icono Tiempo" loading="lazy"> -->
+                
                 <img src="build/img/icono3.svg" alt="Icono Tiempo" loading="lazy">
 
                 <h3>A Tiempo</h3>

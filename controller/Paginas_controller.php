@@ -22,7 +22,6 @@ class Paginas_controller
 
     public static function nosotros(Router $router)
     {
-
         $router->vista('paginas/nosotros', []);
     }
 
@@ -39,10 +38,10 @@ class Paginas_controller
     {
 
         $id = validar_direccionar('/propiedades');
-
+        
         // Buscar la propiedad por su id
         $propiedad = Propiedad::find($id);
-
+        
         $router->vista('paginas/propiedad', [
             'propiedad' => $propiedad
         ]);

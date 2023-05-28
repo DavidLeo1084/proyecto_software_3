@@ -31,18 +31,17 @@ class Router
         // ];
         $rutas_protegidas = [];
 
-        // $urlActual = $_SERVER['PATH_INFO'] === '' ? '/' : $_SERVER['REQUEST_URI'];
-        $urlActual = $_SERVER['PATH_INFO'] ?? '/';
-        
+        // $urlActual = $_SERVER['REQUEST_URI'] === '' ? '/' : $_SERVER['PATH_INFO'];
+        $urlActual = strtok($_SERVER['REQUEST_URI'], '?') ?? '/';
+        // $urlActual = $_SERVER['PATH_INFO'] ?? '/';
+
+
         $metodo = $_SERVER['REQUEST_METHOD'];
 
         if ($metodo === 'GET') {
             $fn = $this->rutasGET[$urlActual] ?? null;
-           
-             
         } else {
             $fn = $this->rutasPOST[$urlActual] ?? null;
-            
         }
 
         //Proteger las rutas
@@ -50,22 +49,20 @@ class Router
             header('Location: /');
         }
 
-        
         if ($fn) {
             // La url existe y hay una funcion asociada
-            
+
             call_user_func($fn, $this);
             //   debugear($fn);  
         } else {
+
             echo "pagina no encontrada Error 404";
-            // debugear($fn); 
         }
     }
 
     // Muestra la vista
     public function vista($view, $datos = [])
     {
-
         foreach ($datos as $key => $value) {
             $$key = $value;
         }

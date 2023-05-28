@@ -4,7 +4,7 @@ if (!isset($_SESSION)) {
 }
 $autenticar = $_SESSION['login'] ?? false;
 
-if(!isset($inicio)) {
+if (!isset($inicio)) {
     $inicio = false;
 }
 
@@ -19,7 +19,7 @@ if(!isset($inicio)) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bienes Raices</title>
     <link rel="stylesheet" href="/../../build/css/app.css">
-    <!-- <link rel="stylesheet" href="../public/build/css/app.css"> -->
+
 
 </head>
 
@@ -29,20 +29,18 @@ if(!isset($inicio)) {
             <div class="barra">
 
                 <?php if ($autenticar) : ?>
-                    <!-- <a href="/admin/index.php"> -->
+
                     <a href="/admin">
                     <?php endif; ?>
 
                     <?php if (!$autenticar) : ?>
-                        <!-- <a href="/index.php"> -->
+
                         <a href="/">
                         <?php endif; ?>
                         <img src="../build/img/logo.svg" alt="Logotipo de Bienes Raices">
-                        <!-- <img src="../public/build/img/logo.svg" alt="Logotipo de Bienes Raices"> -->
                         </a>
                         <div class="mobile-menu">
                             <img src="build/img/barras.svg" alt="icono menu responsive">
-                            <!-- <img src="../public/build/img/barras.svg" alt="icono menu responsive"> -->
                         </div>
                         <div class="derecha">
 
@@ -78,7 +76,7 @@ if(!isset($inicio)) {
 
 
                         </div>
-            </div><!--.barra-->
+            </div>
             <?php if ($inicio) { ?>
                 <h1>Venta de Casas y Departamentos Exclusivos de Lujo</h1>
             <?php } ?>
@@ -100,10 +98,9 @@ if(!isset($inicio)) {
     </footer>
 
     <script src="/build/js/app.js"></script>
-    <!-- <script src="../public/build/js/app.js"></script> -->
-    <script src="/build/js/modernizr.js"></script> 
-    <!-- <script src="../public/build/js/modernizr.js"></script>  -->
-    
+
+    <script src="/build/js/modernizr.js"></script>
+
 </body>
 
 </html>

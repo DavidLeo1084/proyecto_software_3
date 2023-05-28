@@ -3,7 +3,7 @@
     <?php include 'iconos.php'; ?>
 </main>
 <section class="seccion contenedor">
-    <h2>Casas y Dpts en Venta</h2>
+    <h2>Casas y Departamentos en Venta</h2>
 
     <?php
     include 'listado.php';
@@ -76,8 +76,7 @@
         <h3>Testimoniales</h3>
         <div class="testimonial">
             <blockquote>
-                <!-- <img class="comilla" src="src/img/comilla.svg" alt="Imagen Comilla"> -->
-                <!-- <img class="comilla" src="build/img/comilla.svg" alt="Imagen Comilla"> -->
+
                 El personal se comportó de una excelente forma, muy buena atención y la casa que me ofrecieron
                 cumple con todas mis expectativas.
             </blockquote>

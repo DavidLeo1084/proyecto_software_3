@@ -2,11 +2,17 @@
 
 namespace Model;
 
+use MVC\Router;
+use Model\Vendedores;
+use Model\Propiedad;
+
 class Admin extends ActiveRecord
 {
 
     //Base de datos 
     protected static $tabla = 'usuarios';
+    protected static $tabla2 = 'vendedores';
+
     protected static $columnasDB = ['id', 'email', 'password'];
 
 
@@ -37,29 +43,44 @@ class Admin extends ActiveRecord
 
     public function existeUsuario()
     {
-        
-        // Revisar si el usuario existe.
-        $query = "SELECT * FROM " . self::$tabla . " WHERE email = '" . $this->email . "' LIMIT 1";
-        $resultado = self::$db->query($query);
-        
+
+        if (self::$tabla === 'usuarios') {
+            // Revisar si el usuario existe.
+            $query = "SELECT * FROM " . self::$tabla . " WHERE email = '" . $this->email . "' LIMIT 1";
+            $resultado = self::$db->query($query);
+            
+        } elseif (self::$tabla2 === 'vendedores') {
+            // Revisar si el usuario existe.
+            debugear("algo");
+            $query = "SELECT * FROM " . self::$tabla2 . " WHERE email = '" . $this->email . "' LIMIT 1";
+            $resultado = self::$db->query($query);
+        }
+
         if (!$resultado->num_rows) {
             self::$errores[] = 'El usuario no existe';
             return;
         }
-
+        // debugear($resultado);
         return $resultado;
     }
 
     public function comprobarPassword($resultado)
     {
+        $autenticado = false;
         $usuario = $resultado->fetch_object();
-        
-        $autenticado = password_verify($this->password, $usuario->password);
-        
 
-        if (!$autenticado) {
-            self::$errores[] = 'El Password es incorrecto';
+        // $passwordHash = hash('sha256', $this->password . $this->email['password']);
+        // debugear($passwordHash);
+
+        // debugear($passwordHash. ' contra ' . $usuario->password);
+        // $autenticado = password_verify($this->password, $usuario->password);
+        // if (!$autenticado )
+        if ($this->password === $usuario->password) {
+            // $autenticado = true;
+
+            return $autenticado = true;
         }
+        self::$errores[] = 'El Password es incorrecto';
         return $autenticado;
     }
 

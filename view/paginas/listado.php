@@ -28,8 +28,7 @@
                     </li>
                 </ul>
                 <a href="/propiedad?id=<?php echo $propiedad->id; ?>" class="boton-amarillo-block">Ver Propiedad</a>
-
-            </div> <!--.contenido-anuncio-->
-        </div> <!--.anuncio-->
+            </div>
+        </div>
     <?php } ?>
-</div> <!--.contenedor-anuncios-->
+</div>

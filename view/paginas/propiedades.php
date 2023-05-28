@@ -1,6 +1,6 @@
 <main class="contenedor seccion">
     <h2>Casas y Apartamentos en Venta</h2>
     <?php
-    include 'listado.php';
+    include_once 'listado.php';
     ?>
 </main>
