@@ -60,7 +60,7 @@ class Admin extends ActiveRecord
             self::$errores[] = 'El usuario no existe';
             return;
         }
-        // debugear($resultado);
+        
         return $resultado;
     }
 
